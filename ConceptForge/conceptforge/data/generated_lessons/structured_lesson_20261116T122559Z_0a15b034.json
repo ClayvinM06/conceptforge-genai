@@ -1,0 +1,110 @@
+{
+  "id": "20261116T122559Z_0a15b034",
+  "created_at_utc": "2026-11-16T12:25:59.443053+00:00",
+  "topic": "Q-learning",
+  "difficulty": "Beginner",
+  "model": "gemini-3.5-flash-lite",
+  "format": "structured_json",
+  "prompt_strategy": "week3_schema_guided",
+  "generation_parameters": "SDK/model defaults; application/json with Pydantic response_schema",
+  "prompt": "Create ONE original beginner-level teaching lesson about Q-learning for undergraduate STEM learners.\n\nMust explicitly cover these learning objectives:\n- Explain the role of states, actions, rewards and the Q-function.\n- Interpret the Q-learning update equation.\n- Calculate a Q-value update from supplied numeric values.\n\nContent requirements:\n- In your JSON output, set the `topic` field to exactly \"Q-learning\".\n- In your JSON output, set the `difficulty` field to exactly \"Beginner\".\n- Do not add qualifiers such as \"undergraduate\" to the difficulty field.\n- Use accurate technical definitions without misleading simplifications.\n- Begin with a short, accessible introduction and explain technical terms clearly.\n- Define each mathematical symbol before interpreting its equation.\n- Show one correct worked example with givens, intermediate steps and a final answer.\n- Include exactly two self-check questions with short reference answers.\n- Provide three or more key concepts and two or more takeaways.\n- Avoid fabricated citations or claims of independent verification.\n- Do not repeat the same sentence across multiple fields.\n- Make your explanation appropriate to the selected difficulty level.\n- Do not wrap mathematical equations in Markdown dollar delimiters in the equation field.\n\nQ-learning-specific accuracy checks:\n- Distinguish Q^pi (for a specified policy) from the optimal action value Q*.\n- The max next-state action value is a current estimate, not a guaranteed correct future outcome.\n- Use a consistent learning-rate convention; alpha=0 means no update, alpha=1 replaces\n  the current Q-value with the TD target, which can depend on previously learned estimates.\n- Explicitly define s, a, r, gamma, alpha, s-prime and the max over next-state actions.\n- Check all numeric arithmetic before returning your worked example.\n\nReturn the educational content in the required structured response format.\n",
+  "lesson_structured": {
+    "topic": "Q-learning",
+    "difficulty": "Beginner",
+    "title": "Introduction to Q-learning: Foundations and Algorithm Mechanics",
+    "introduction": "Reinforcement learning allows an autonomous agent to learn optimal decision-making strategies through direct interaction with its environment. Q-learning is a model-free reinforcement learning algorithm designed to find the best action to take given any current state, without requiring prior knowledge of how the environment transitions between states.",
+    "learning_objectives": [
+      "Explain the role of states, actions, rewards and the Q-function.",
+      "Interpret the Q-learning update equation.",
+      "Calculate a Q-value update from supplied numeric values."
+    ],
+    "key_concepts": [
+      {
+        "name": "State (s)",
+        "explanation": "A specific, discrete or continuous representation of the environment's current situation or configuration as perceived by the agent."
+      },
+      {
+        "name": "Action (a)",
+        "explanation": "A deliberate choice made by the agent that alters the environment or transitions the agent from one state to another."
+      },
+      {
+        "name": "Reward (r)",
+        "explanation": "A scalar feedback signal provided by the environment immediately after an action is executed, indicating how desirable that transition was."
+      },
+      {
+        "name": "Q-Function",
+        "explanation": "A function that estimates the expected cumulative future reward of taking a specific action in a given state and subsequently following an optimal policy."
+      }
+    ],
+    "symbol_definitions": [
+      {
+        "symbol": "Q(s, a)",
+        "meaning": "The current estimated quality value of taking action a in state s"
+      },
+      {
+        "symbol": "alpha",
+        "meaning": "The learning rate, determining the weight given to newly acquired information versus existing estimates"
+      },
+      {
+        "symbol": "r",
+        "meaning": "The immediate numerical reward received after executing action a in state s"
+      },
+      {
+        "symbol": "gamma",
+        "meaning": "The discount factor between 0 and 1 that determines the present value of future rewards"
+      },
+      {
+        "symbol": "s_prime",
+        "meaning": "The subsequent state resulting from the execution of action a in state s"
+      },
+      {
+        "symbol": "max_{a'} Q(s', a')",
+        "meaning": "The maximum estimated Q-value across all possible actions in the next state s_prime, representing our current estimate of the best future path"
+      }
+    ],
+    "equation_latex": "Q(s, a) \\leftarrow Q(s, a) + \\alpha \\left[ r + \\gamma \\max_{a'} Q(s', a') - Q(s, a) \\right]",
+    "equation_explanation": "The equation updates the Q-value for a state-action pair by combining the old Q-value with a temporal difference error. The temporal difference error is calculated as the immediate reward plus the discounted maximum future estimate, minus the current Q-value prediction.",
+    "worked_example": {
+      "problem": "Calculate the updated Q-value for a given state-action pair after the agent observes a reward and a next state.",
+      "given_values": [
+        "Current Q(s, a) = 10.0",
+        "Learning rate (alpha) = 0.5",
+        "Reward (r) = 4.0",
+        "Discount factor (gamma) = 0.9",
+        "Maximum next-state Q-value max Q(s', a') = 20.0"
+      ],
+      "solution_steps": [
+        "Calculate the discounted maximum future value: gamma * max Q(s', a') = 0.9 * 20.0 = 18.0",
+        "Add the immediate reward to the discounted future value: r + gamma * max Q(s', a') = 4.0 + 18.0 = 22.0",
+        "Calculate the temporal difference error by subtracting the current Q-value: 22.0 - 10.0 = 12.0",
+        "Multiply the error by the learning rate alpha: 0.5 * 12.0 = 6.0",
+        "Add this weighted adjustment to the original Q-value: 10.0 + 6.0 = 16.0"
+      ],
+      "final_answer": "16.0"
+    },
+    "key_takeaways": [
+      "Q-learning is model-free, meaning it learns optimal actions without knowing the underlying transition probabilities of the environment.",
+      "The learning rate alpha controls how fast the agent overwrites old Q-values with new temporal difference targets.",
+      "The maximum next-state action value is an estimate based on current knowledge rather than a guaranteed future outcome."
+    ],
+    "self_check_questions": [
+      {
+        "question": "What is the role of the discount factor gamma in the Q-learning equation?",
+        "expected_answer": "It determines the present value of future rewards, ensuring that immediate rewards are weighted more heavily than rewards far in the future."
+      },
+      {
+        "question": "If the learning rate alpha is set to 0, how does the Q-value update change?",
+        "expected_answer": "An alpha of 0 means no update occurs, and the Q-value remains entirely unchanged regardless of the observed reward or next state."
+      }
+    ]
+  },
+  "validation": {
+    "schema_valid": true,
+    "structure_passed": true,
+    "errors": [],
+    "warnings": [],
+    "factual_accuracy_verified": false,
+    "manual_review_required": true
+  },
+  "review_status": "Unverified AI-generated content: human checking required"
+}
